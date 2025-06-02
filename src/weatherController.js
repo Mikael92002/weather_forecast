@@ -21,13 +21,13 @@ export class weatherController {
     this.inputField.addEventListener("keydown", (event) => {
       if (event["key"] !== undefined) {
         if (event["key"].toLowerCase() === "enter") {
-          this.searchEvent(event);
+          this.searchEvent();
         }
       }
     });
   }
 
-  async searchEvent(event) {
+  async searchEvent() {
     if (this.inputField.value !== "") {
       this.model.city = this.inputField.value;
 
@@ -43,9 +43,10 @@ export class weatherController {
       else {
         console.log(result);
         for (let day of this.model.dayArray) {
-          console.log("Day: " + JSON.stringify(day));
+          //console.log("Day: " + JSON.stringify(day));
         }
-        this.view.updateCityName(result["resolvedAddress"]);
+        this.view.updateCityName(this.model.retrievedCity);
+        this.view.updateCurrentTemp(this.model.currentConditions["temp"]);
       }
     }
   }

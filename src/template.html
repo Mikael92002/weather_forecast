@@ -8,7 +8,7 @@
 <body>
     <header>
         <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="18px" height="18px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
+            width="26px" height="26px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
             <g>
                 <g>
                     <path fill-rule="evenodd" clip-rule="evenodd" fill="#394240" d="M32.003,16.003c-8.837,0-16.001,7.165-16.001,16.001
@@ -40,19 +40,22 @@
 		s-8.001,3.579-8.001,8.001c0,4.414,3.583,8.001,8.001,8.001S39.996,36.411,39.996,31.997z" />
             </g>
         </svg>
-        Weather
+        <span>Weather</span>
     </header>
-    <div id="centered-container">
-        <div id="search-container">
-            <input placeholder="Enter city name..." type="text" id="search-input">
-            <button id="search-button">Search</button>
-        </div>
+
+
+    <div id="search-container">
+        <input placeholder="Enter city name..." type="text" id="search-input">
+        <button id="search-button">Search</button>
+    </div>
+    <div id="temp-container">
+        <button id="C">&degC</button>
+        <button id="F" class="active">&degF</button>
     </div>
     <div id="forecast-container">
         <div id="city-name"></div>
+        <div id="current-temp"></div>
+        <div id="weather-grid"></div>
     </div>
-    <footer>
-        
-    </footer>
 </body>
 </html>

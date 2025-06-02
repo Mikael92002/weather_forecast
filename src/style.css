@@ -15,7 +15,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background-color: gainsboro;
+    background-color: skyblue;
     min-height: 100vh;
     box-sizing: border-box;
     display: flex;
@@ -27,9 +27,10 @@ header {
     color: white;
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
-    font-size: xx-large;
+    font-size: 3rem;
     font-style: normal;
     text-align: center;
+    border-bottom: 1px solid black;
 }
 
 svg {
@@ -42,10 +43,19 @@ svg:hover {
     transform: rotate(360deg);
 }
 
+span,
+span:hover {
+    transition: 0.5s;
+}
+
+span:hover {
+    text-shadow: 2px 2px 3px gray;
+}
+
 #search-container {
     width: 100%;
     box-sizing: border-box;
-    padding-top: 1rem;
+    padding: 1rem 0rem 0.25rem 0rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,10 +68,11 @@ svg:hover {
 }
 
 #search-button {
-    font-weight: 900;
-    font-size: 1.25rem;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
     color: white;
-    background-color: lightskyblue;
+    background-color: rgb(75, 186, 255);
     box-shadow: 2px 2px 2px 1px rgba(80, 80, 80, 0.5);
     align-self: flex-end;
     padding: 0.2rem 0.5rem;
@@ -71,6 +82,7 @@ svg:hover {
 #search-button:hover {
     cursor: pointer;
     box-shadow: 3px 3px 2px 1px rgba(80, 80, 80, 0.5);
+    background-color: lightskyblue;
 }
 
 #search-button:active {
@@ -79,7 +91,8 @@ svg:hover {
 }
 
 #search-input {
-    font-size: 1rem;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5rem;
     padding: 0.2rem 0.4rem;
     box-shadow: 2px 2px 2px 1px rgba(80, 80, 80, 0.5);
     transition: 0.2s;
@@ -90,12 +103,42 @@ svg:hover {
     box-shadow: 4px 4px 2px 1px rgba(80, 80, 80, 0.5);
 }
 
+#temp-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.25rem;
+}
+
+#C,
+#F {
+    font-family: "Jersey 10", sans-serif;
+    background-color: white;
+    border: 1px solid black;
+    width: 3rem;
+    font-weight: 400;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#C:hover,
+#F:hover {
+    opacity: 0.5;
+}
+
+#C:active,
+#F:active {
+    opacity: 0.5;
+    opacity: 1;
+}
+
 #forecast-container {
-    flex:1;
-    display: grid;
-    margin-top: 2rem;
+    flex: 1;
+    margin-top: 0.8rem;
     background-color: midnightblue;
     height: auto;
+    padding-top: 0.5rem;
 }
 
 #city-name {
@@ -108,8 +151,29 @@ svg:hover {
     text-align: center;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem;
 }
 
-#city-name.visible {
+#city-name.visible,
+#current-temp.visible {
     opacity: 1;
+}
+
+#current-temp {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 2rem;
+    color: white;
+    font-style: normal;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    margin-top: 1rem;
+}
+
+#weather-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+    /* border: 1px solid red; */
 }
