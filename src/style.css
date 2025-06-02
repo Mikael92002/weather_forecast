@@ -133,6 +133,12 @@ span:hover {
     opacity: 1;
 }
 
+#C.active,
+#F.active {
+    background-color: midnightblue;
+    color: white;
+}
+
 #forecast-container {
     flex: 1;
     margin-top: 0.8rem;
@@ -174,6 +180,10 @@ span:hover {
 }
 
 #weather-grid {
+    border: 1px solid red;
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
-    /* border: 1px solid red; */
+    width: 80%;
+    align-self: center;
+    justify-self: center;
 }

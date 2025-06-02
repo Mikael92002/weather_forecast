@@ -5,6 +5,8 @@ export class weatherController {
   view;
   searchButton;
   inputField;
+  C;
+  F;
 
   constructor(model, view) {
     this.model = model;
@@ -25,18 +27,41 @@ export class weatherController {
         }
       }
     });
+
+    //C:
+    this.C = document.querySelector("#C");
+    this.F = document.querySelector("#F");
+    this.C.addEventListener("click", () => {
+      this.C.classList.add("active");
+      this.F.classList.remove("active");
+      this.view.updateCurrentTemp(
+        this.roundToOneDecimal(
+          (this.model.currentConditions["temp"] - 32) / (9 / 5)
+        ),
+        "C"
+      );
+    });
+
+    //F:
+    this.F.addEventListener("click", () => {
+      this.F.classList.add("active");
+      this.C.classList.remove("active");
+      this.view.updateCurrentTemp(this.model.currentConditions["temp"], "F");
+    });
   }
 
   async searchEvent() {
     if (this.inputField.value !== "") {
       this.model.city = this.inputField.value;
 
+      this.view.loadView();
       let result = await this.model.getWeatherInfo();
 
       //Fail/no city found:
       if (result === "400") {
         this.inputField.value = "WRONG CITY";
         console.log("ERROR ERROR ERROR");
+        this.view.errorView();
       }
 
       //Success:
@@ -45,9 +70,31 @@ export class weatherController {
         for (let day of this.model.dayArray) {
           //console.log("Day: " + JSON.stringify(day));
         }
+
+        //city name update:
         this.view.updateCityName(this.model.retrievedCity);
-        this.view.updateCurrentTemp(this.model.currentConditions["temp"]);
+
+        //temp update:
+        if (this.C.classList.contains("active")) {
+          this.view.updateCurrentTemp(
+            this.roundToOneDecimal(
+              (this.model.currentConditions["temp"] - 32) / (9 / 5)
+            ),
+            "C"
+          );
+        } else {
+          this.view.updateCurrentTemp(
+            this.model.currentConditions["temp"],
+            "F"
+          );
+        }
+
+        //grid update:
       }
     }
+  }
+
+  roundToOneDecimal(num) {
+    return Math.round(num * 10) / 10;
   }
 }
