@@ -1,12 +1,14 @@
 export class weatherModel {
   city = null;
-  temperature = null;
+  retrievedCity = null;
+  currentConditions = {}
+  dayArray = [];
   gif = null;
   APIformat =
     "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
   APIkey = "D45NABX95DYWXEZMFRMCSZCZ2";
 
-  constructor(city, temperature) {
+  constructor(city) {
     this.city = city;
   }
 
@@ -18,16 +20,15 @@ export class weatherModel {
       if (response.ok) {
         const json = await response.json();
 
-        // for in loop just returns keys
+        // for in loop just returns keys (can use array[key] to retrieve object)
         // for of loop returns values of keys
-        // for(let dayNumber in JSON.days){
-        //     console.log(dayNumber); //logs days 0-14
-        //     //console.log(JSON.dayNumber.hours)
-        // }
         for (let dayNumber of json.days) {
-          console.log(dayNumber.hours); // returns 15 days with hour key
-          // containing 24 values 0-24
+          console.log(dayNumber.hours); // returns 15 days with hour as key
+          // containing 24 values 0-23
+          this.dayArray.push(dayNumber.hours); //add days to dayArray
         }
+         this.retrievedCity = json["resolvedAddress"] //city name to display
+         this.currentConditions = json["currentConditions"] //curr conditions
 
         //response 400 if bad request!!!
         return json;

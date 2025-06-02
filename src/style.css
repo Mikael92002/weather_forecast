@@ -1,12 +1,48 @@
-html, body{
-margin: 0;
-padding: 0;
-background-color: gainsboro;
-height: 100%;
-box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=M+PLUS+Rounded+1c&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
-#search-container{
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: gainsboro;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: skyblue;
+    color: white;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-size: xx-large;
+    font-style: normal;
+    text-align: center;
+}
+
+svg {
+    transition: 2s;
+    cursor: pointer;
+}
+
+svg:focus,
+svg:hover {
+    transform: rotate(360deg);
+}
+
+#search-container {
     width: 100%;
     box-sizing: border-box;
     padding-top: 1rem;
@@ -15,12 +51,13 @@ box-sizing: border-box;
     justify-content: center;
     gap: 1rem;
 }
-#search-container>*{
+
+#search-container>* {
     border-radius: 1rem;
     border: 0px;
 }
 
-#search-button{
+#search-button {
     font-weight: 900;
     font-size: 1.25rem;
     color: white;
@@ -30,22 +67,49 @@ box-sizing: border-box;
     padding: 0.2rem 0.5rem;
     transition: 0.2s;
 }
-#search-button:hover{
-    cursor: grab;
+
+#search-button:hover {
+    cursor: pointer;
     box-shadow: 3px 3px 2px 1px rgba(80, 80, 80, 0.5);
 }
-#search-button:active{
+
+#search-button:active {
     box-shadow: 1px 1px 2px 1px rgba(80, 80, 80, 0.5);
     transform: scale(0.98);
 }
 
-#search-input{
+#search-input {
     font-size: 1rem;
     padding: 0.2rem 0.4rem;
     box-shadow: 2px 2px 2px 1px rgba(80, 80, 80, 0.5);
     transition: 0.2s;
-    outline:none;
+    outline: none;
 }
-#search-input:focus{
+
+#search-input:focus {
     box-shadow: 4px 4px 2px 1px rgba(80, 80, 80, 0.5);
+}
+
+#forecast-container {
+    flex:1;
+    display: grid;
+    margin-top: 2rem;
+    background-color: midnightblue;
+    height: auto;
+}
+
+#city-name {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 2rem;
+    color: white;
+    font-style: normal;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#city-name.visible {
+    opacity: 1;
 }
