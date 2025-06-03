@@ -171,21 +171,56 @@ span:hover {
     margin-bottom: 1rem;
 }
 
+#daily-title{
+    opacity:0;
+}
+
+#hourly-grid {
+    margin-bottom: 2rem;
+}
+
+#hourly-container-div {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    color: white;
+}
+
+#hourly-container-div>*:nth-child(2n) {
+    align-self: self-start;
+    justify-self: start;
+}
+
+#weekly-title {
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    opacity: 0;
+}
+
+#weekly-title.visible, #daily-title.visible {
+    opacity: 1;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: xx-large;
+    text-shadow: 3px 2px 2px rgb(113, 113, 113);
+}
+
 #weather-grid {
     display: grid;
     grid-auto-columns: fit-content;
     grid-auto-flow: column;
-    max-width: 100vw;
+    max-width: 100%;
     align-self: center;
     justify-self: center;
     overflow-x: auto;
-    overflow-y:hidden;
+    overflow-y: hidden;
     scrollbar-color: white midnightblue;
     scrollbar-width: thin;
     padding-bottom: 1rem;
 }
 
-#weather-div{
+#weather-div {
     display: grid;
     grid-template-rows: 40px 40px 40px;
     color: white;
@@ -196,12 +231,13 @@ span:hover {
     padding: 0 1rem;
 }
 
-#day-div{
+#day-div {
     font-size: x-large;
     font-weight: 100;
     align-self: self-start;
 }
-#temp-div{
+
+#temp-div {
     font-weight: 900;
     font-size: large;
 }

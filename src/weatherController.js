@@ -11,14 +11,18 @@ export class weatherController {
   F;
   weatherGrid;
   hourlyGrid;
+  weeklyTitle;
+  dailyTitle;
 
   constructor(model, view) {
     this.model = model;
     this.view = view;
 
     //hourly weather grid:
+    this.dailyTitle = document.querySelector("#daily-title");
     this.hourlyGrid = document.querySelector("#hourly-grid")
     //weekly weather grid:
+    this.weeklyTitle = document.querySelector("#weekly-title");
     this.weatherGrid = document.querySelector("#weather-grid");
     // searchButton:
     this.searchButton = document.querySelector("#search-button");
@@ -74,6 +78,8 @@ export class weatherController {
         this.view.errorView();
         this.view.clearGrid();
         this.model.currentConditions = "";
+        this.weeklyTitle.classList.remove("visible");
+        this.dailyTitle.classList.remove("visible");
       }
 
       //Success:
@@ -103,6 +109,8 @@ export class weatherController {
 
         //grid update:
         this.updateGridController();
+        this.weeklyTitle.classList.add("visible");
+        this.dailyTitle.classList.add("visible")
       }
     }
   }
@@ -163,7 +171,7 @@ export class weatherController {
       let time = hour.datetime.slice(0,hour.datetime.length-3);
       let conditions = hour.conditions;
       let temp = hour.temp;
-      console.log(this.MilitaryTimeConverter(time));
+      let realTime = this.MilitaryTimeConverter(time);
       console.log(conditions);
       console.log(temp);
 
@@ -172,18 +180,20 @@ export class weatherController {
       let tempDiv = document.createElement("div");
       let iconDiv = document.createElement("img");
 
-      hourDiv.textContent = time;
+      containerDiv.id = "hourly-container-div";
+
+      hourDiv.textContent = realTime + ": ";
       if(this.C.classList.contains("active")){
         tempDiv.textContent = this.roundToOneDecimal((temp-32)/(9/5)) + "\u00B0C"
       }
       else{
-        tempDiv.textContent = temp;
+        tempDiv.textContent = temp + "\u00B0F";
       }
 
       iconDiv.src = this.iconSelect(conditions);
       iconDiv.style.width = "20px";
 
-      containerDiv.append(hourDiv, tempDiv, iconDiv);
+      containerDiv.append(hourDiv, iconDiv, tempDiv);
       this.hourlyGrid.append(containerDiv);
     }
   }
@@ -229,11 +239,11 @@ export class weatherController {
 
   MilitaryTimeConverter(hour){
     let firstTwoNums = hour.slice(0,2);
-    
+
     if(firstTwoNums === "00"){
       return "12:00 a.m."
     }
-    if(Number(firstTwoNums)<12){
+    else if(Number(firstTwoNums)<12){
       return firstTwoNums + ":00 a.m."
     }
     else if(firstTwoNums === "12"){

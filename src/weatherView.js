@@ -3,12 +3,14 @@ export class weatherView {
   cityName;
   currentTemp;
   weatherGrid;
+  hourlyGrid;
 
   constructor() {
     this.weatherForecastDiv = document.querySelector("#forecast-container");
     this.cityName = document.querySelector("#city-name");
     this.currentTemp = document.querySelector("#current-temp");
     this.weatherGrid = document.querySelector("#weather-grid");
+    this.hourlyGrid = document.querySelector("#hourly-grid");
   }
 
   updateCityName(newCity) {
@@ -24,6 +26,9 @@ export class weatherView {
   clearGrid() {
     while (this.weatherGrid.firstChild) {
       this.weatherGrid.removeChild(this.weatherGrid.lastChild);
+    }
+    while(this.hourlyGrid.firstChild){
+      this.hourlyGrid.removeChild(this.hourlyGrid.lastChild);
     }
   }
 
