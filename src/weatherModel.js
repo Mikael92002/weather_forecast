@@ -14,6 +14,7 @@ export class weatherModel {
   }
 
   async getWeatherInfo() {
+    this.clearDayArray();
     try {
         this.loadMode = true;
       const response = await fetch(
@@ -25,16 +26,25 @@ export class weatherModel {
 
         // for in loop just returns keys (can use array[key] to retrieve object)
         // for of loop returns values of keys
-        for (let dayNumber of json.days) {
-          //console.log(dayNumber.hours); // returns 15 days with hour as key
-          // containing 24 values 0-23
-          this.dayArray.push(dayNumber.hours); //add days to dayArray
+        for (let day of json.days) {
+        //    console.log(day); // returns 15 days (length)
+          this.dayArray.push(day); //add days to dayArray
         }
+
+        // for(let i = 0;i<this.dayArray.length;i++){
+        //     let hour = this.dayArray[i]["hours"] //returns 0-23 keys (hours)
+        //     console.log(hour);
+        //     for(let j = 0;j<hour.length;j++){
+        //         //console.log(hour[j]["datetime"]);
+        //     }
+        // }
+
          this.retrievedCity = json["resolvedAddress"] //city name to display
          this.currentConditions = json["currentConditions"] //curr conditions
-        //response 400 if bad request!!!
+        
         return json;
       } else {
+        //response 400 if bad request!!!
         throw new Error(response.status)
       }
     } catch (error) {
@@ -43,6 +53,16 @@ export class weatherModel {
     }
   }
 
+// for(let i = 0;i<this.dayArray.length;i++){
+//     let hour = this.dayArray[i]["hours"] //returns 0-23 keys (hours)
+//     console.log(hour);
+//     for(let j = 0;j<hour.length;j++){
+//         //console.log(hour[j]["datetime"]);
+//     }
+// }
 
+clearDayArray(){
+    this.dayArray = []
+}
 
 }

@@ -8,7 +8,7 @@ export class weatherView {
     this.weatherForecastDiv = document.querySelector("#forecast-container");
     this.cityName = document.querySelector("#city-name");
     this.currentTemp = document.querySelector("#current-temp");
-    this.weatherGrid = document.querySelector("weather-grid");
+    this.weatherGrid = document.querySelector("#weather-grid");
   }
 
   updateCityName(newCity) {
@@ -21,19 +21,24 @@ export class weatherView {
   }
 
   addToGrid() {}
+  clearGrid() {
+    while (this.weatherGrid.firstChild) {
+      this.weatherGrid.removeChild(this.weatherGrid.lastChild);
+    }
+  }
 
   updateCurrentTemp(temp, CorF) {
     this.currentTemp.classList.remove("visible");
 
     setTimeout(() => {
-      if (CorF === "C") {
-        this.currentTemp.textContent = temp + "\u00B0C";
-      }
-      else if (CorF === "F"){
-        this.currentTemp.textContent = temp + "\u00B0F";
-      }
-      else{
-        this.currentTemp.textContent = temp;
+      if (typeof temp === "number" && !Number.isNaN(temp)) {
+        if (CorF === "C") {
+          this.currentTemp.textContent = temp + "\u00B0C";
+        } else if (CorF === "F") {
+          this.currentTemp.textContent = temp + "\u00B0F";
+        }
+      } else {
+        this.currentTemp.textContent = "";
       }
       this.currentTemp.classList.add("visible");
     }, 250);
@@ -49,7 +54,18 @@ export class weatherView {
     this.updateCurrentTemp("");
   }
 
-  updateGrid(){
-    
+  updateGrid() {}
+
+  //UNFINISHEDDD
+  updateGridTemp(dayArray, CorF, rounding) {
+    for (let i = 0; i < dayArray.length; i++) {
+      let day = dayArray[i];
+      if (CorF === "C") {
+        this.weatherGrid.children[i].textContent = rounding((day["temp"]-32)/(9/5));
+      }
+      else if (CorF === "F"){
+        this.weatherGrid.children[i].textContent = day["temp"];
+      }
+    }
   }
 }

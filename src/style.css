@@ -182,8 +182,18 @@ span:hover {
 #weather-grid {
     border: 1px solid red;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+    grid-template-columns: repeat(auto-fill, 50px);
+    grid-auto-flow: column;
     width: 80%;
     align-self: center;
     justify-self: center;
+    justify-content: space-evenly;
+    overflow-x: auto;
+    overflow-y:hidden;
+}
+
+#weather-div{
+    color: white;
+    border: 1px solid white;
+    padding: 2px;
 }

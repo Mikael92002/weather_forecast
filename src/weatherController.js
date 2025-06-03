@@ -1,4 +1,5 @@
-import { weatherModel } from "./weatherModel.js";
+import { hourModel } from "./hourModel.js";
+import cloudyImg from "./cloud.svg";
 
 export class weatherController {
   model;
@@ -7,11 +8,14 @@ export class weatherController {
   inputField;
   C;
   F;
+  weatherForecastGrid;
 
   constructor(model, view) {
     this.model = model;
     this.view = view;
 
+    //body:
+    this.weatherForecastGrid = document.querySelector("#weather-grid");
     // searchButton:
     this.searchButton = document.querySelector("#search-button");
     this.searchButton.addEventListener("click", (event) =>
@@ -40,6 +44,7 @@ export class weatherController {
         ),
         "C"
       );
+      this.view.updateGridTemp(this.model.dayArray, "C", this.roundToOneDecimal);
     });
 
     //F:
@@ -47,6 +52,7 @@ export class weatherController {
       this.F.classList.add("active");
       this.C.classList.remove("active");
       this.view.updateCurrentTemp(this.model.currentConditions["temp"], "F");
+      this.view.updateGridTemp(this.model.dayArray, "F", this.roundToOneDecimal)
     });
   }
 
@@ -62,6 +68,8 @@ export class weatherController {
         this.inputField.value = "WRONG CITY";
         console.log("ERROR ERROR ERROR");
         this.view.errorView();
+        this.view.clearGrid();
+        this.model.currentConditions = "";
       }
 
       //Success:
@@ -87,14 +95,50 @@ export class weatherController {
             this.model.currentConditions["temp"],
             "F"
           );
+
         }
 
         //grid update:
+        this.updateGridController();
       }
     }
   }
 
   roundToOneDecimal(num) {
     return Math.round(num * 10) / 10;
+  }
+
+  updateGridController() {
+    this.view.clearGrid();
+    for (let i = 0; i < this.model.dayArray.length; i++) {
+      let weatherDiv = document.createElement("div");
+      let day = this.model.dayArray[i];
+      //   let icon = this.iconSelect(day.conditions.toString());
+      weatherDiv.textContent = day["temp"];
+      weatherDiv.id = "weather-div";
+      //console.log(day);
+
+      let hour = day["hours"];
+      //console.log(hour);
+
+      for (let j = 0; j < hour.length; j++) {
+        //console.log(hour[j]["datetime"]);
+        let hourObject = new hourModel(
+          hour[j]["datetime"],
+          hour[j]["temp"],
+          hour[j]["conditions"]
+        );
+      }
+      this.weatherForecastGrid.appendChild(weatherDiv);
+    }
+  }
+
+  iconSelect(condition) {
+    if (condition === undefined) {
+      return;
+    }
+    if (condition.includes("cloudy")) {
+      return cloudyImg;
+    }
   }
 }
