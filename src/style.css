@@ -135,6 +135,7 @@ span:hover {
     background-color: midnightblue;
     height: auto;
     padding-top: 0.5rem;
+    padding: 0 1rem;
 }
 
 #city-name {
