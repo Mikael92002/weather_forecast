@@ -1,16 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&family=M+PLUS+Rounded+1c&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
 html,
 body {
     margin: 0;
@@ -153,6 +143,7 @@ span:hover {
     font-style: normal;
     font-size: 2rem;
     color: white;
+    text-shadow: 3px 2px 2px rgb(113, 113, 113);
     font-style: normal;
     text-align: center;
     opacity: 0;
@@ -177,23 +168,38 @@ span:hover {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 #weather-grid {
-    border: 1px solid red;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 50px);
+    grid-auto-columns: 50px;
     grid-auto-flow: column;
-    width: 80%;
+    max-width: 100vw;
     align-self: center;
     justify-self: center;
-    justify-content: space-evenly;
     overflow-x: auto;
     overflow-y:hidden;
+    scrollbar-color: white midnightblue;
+    scrollbar-width: thin;
+    padding-bottom: 1rem;
 }
 
 #weather-div{
+    display: grid;
+    grid-template-rows: 40px 40px 50px;
     color: white;
     border: 1px solid white;
-    padding: 2px;
+    text-align: center;
+    justify-items: center;
+    align-items: center;
+}
+
+#day-div{
+    font-size: x-large;
+    font-weight: 100;
+    align-self: self-start;
+}
+#temp-div{
+    font-weight: 900;
 }

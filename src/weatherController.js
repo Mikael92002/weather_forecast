@@ -1,5 +1,6 @@
-import { hourModel } from "./hourModel.js";
-import cloudyImg from "./cloud.svg";
+import cloudyImg from "./cloudy.png";
+import sunnyImg from "./sunny.png";
+import rainImg from "./rain.png";
 
 export class weatherController {
   model;
@@ -44,7 +45,7 @@ export class weatherController {
         ),
         "C"
       );
-      this.view.updateGridTemp(this.model.dayArray, "C", this.roundToOneDecimal);
+      this.updateGridController();
     });
 
     //F:
@@ -52,7 +53,7 @@ export class weatherController {
       this.F.classList.add("active");
       this.C.classList.remove("active");
       this.view.updateCurrentTemp(this.model.currentConditions["temp"], "F");
-      this.view.updateGridTemp(this.model.dayArray, "F", this.roundToOneDecimal)
+      this.updateGridController()
     });
   }
 
@@ -95,7 +96,6 @@ export class weatherController {
             this.model.currentConditions["temp"],
             "F"
           );
-
         }
 
         //grid update:
@@ -111,10 +111,30 @@ export class weatherController {
   updateGridController() {
     this.view.clearGrid();
     for (let i = 0; i < this.model.dayArray.length; i++) {
-      let weatherDiv = document.createElement("div");
       let day = this.model.dayArray[i];
-      //   let icon = this.iconSelect(day.conditions.toString());
-      weatherDiv.textContent = day["temp"];
+      let dayNumber = new Date(day.datetime).getDay();
+
+
+
+      //create weekly grid elements:
+      let weatherDiv = document.createElement("div");
+      let dayDiv = document.createElement("div");
+      let tempDiv = document.createElement("div");
+      let iconDiv = document.createElement("img");
+      dayDiv.id = "day-div";
+      tempDiv.id = "temp-div";
+
+      dayDiv.textContent = this.dayNumberToDay(dayNumber);
+      
+      if (this.C.classList.contains("active")) {
+        tempDiv.textContent = this.roundToOneDecimal((day["temp"] - 32) / (9 / 5));
+      } else {
+        tempDiv.textContent = day["temp"];
+      }
+
+      iconDiv.src = this.iconSelect(day.conditions.toString());
+      iconDiv.style.height = "100%"
+
       weatherDiv.id = "weather-div";
       //console.log(day);
 
@@ -123,22 +143,48 @@ export class weatherController {
 
       for (let j = 0; j < hour.length; j++) {
         //console.log(hour[j]["datetime"]);
-        let hourObject = new hourModel(
-          hour[j]["datetime"],
-          hour[j]["temp"],
-          hour[j]["conditions"]
-        );
       }
+      weatherDiv.append(dayDiv, iconDiv, tempDiv);
       this.weatherForecastGrid.appendChild(weatherDiv);
     }
   }
 
   iconSelect(condition) {
-    if (condition === undefined) {
-      return;
-    }
-    if (condition.includes("cloudy")) {
+    if (condition.toLowerCase().includes("cloudy")) {
       return cloudyImg;
+    }
+    else if(condition.toLowerCase().includes("clear")){
+      return sunnyImg;
+    }
+    else if(condition.toLowerCase().includes("rain")){
+      return rainImg;
+    }
+    else{
+      return sunnyImg;
+    }
+  }
+
+  dayNumberToDay(num){
+    if(num === 0){
+      return "Mon"
+    }
+    else if (num === 1){
+      return "Tue"
+    }
+    else if (num === 2){
+      return "Wed"
+    }
+    else if (num === 3){
+      return "Thu"
+    }
+    else if (num === 4){
+      return "Fri"
+    }
+    else if (num === 5){
+      return "Sat"
+    }
+    else if (num === 6){
+      return "Sun"
     }
   }
 }

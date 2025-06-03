@@ -57,15 +57,15 @@ export class weatherView {
   updateGrid() {}
 
   //UNFINISHEDDD
-  updateGridTemp(dayArray, CorF, rounding) {
-    for (let i = 0; i < dayArray.length; i++) {
-      let day = dayArray[i];
-      if (CorF === "C") {
-        this.weatherGrid.children[i].textContent = rounding((day["temp"]-32)/(9/5));
-      }
-      else if (CorF === "F"){
-        this.weatherGrid.children[i].textContent = day["temp"];
-      }
-    }
-  }
+  // updateGridTemp(dayArray, CorF, rounding) {
+  //   for (let i = 0; i < dayArray.length; i++) {
+  //     let day = dayArray[i];
+  //     if (CorF === "C") {
+  //       this.weatherGrid.children[i].textContent = rounding((day["temp"]-32)/(9/5));
+  //     }
+  //     else if (CorF === "F"){
+  //       this.weatherGrid.children[i].textContent = day["temp"];
+  //     }
+  //   }
+  // }
 }
