@@ -181,15 +181,32 @@ span:hover {
 
 #hourly-container-div {
     display: grid;
-    grid-template-columns: 0.5fr 1fr 1fr;
-    align-items: center;
-    justify-items: center;
+    grid-template-columns: max-content min-content min-content;
     color: white;
+    border: 1px solid rgba(255, 255, 255, 0.328);
+    border-radius: 20px;
+    margin-bottom: 0.25rem;
+    font-size: large;
+    align-items: center;
+    justify-self: center;
+    padding: 0 1rem;
+}
+#hourly-container-div:hover, #hourly-container-div:active{
+    background-color: rgb(43, 43, 190);
 }
 
-#hourly-container-div>*:nth-child(2n) {
-    align-self: self-start;
+#hourly-container-div>*:nth-child(2n),#hourly-container-div>*:nth-child(3n)  {
     justify-self: start;
+}
+#hourly-container-div>:first-child{
+    font-size: x-large;
+    padding: 10px;
+}
+#hourly-container-div>*:nth-child(2n){
+    margin-right: 20px;
+}
+#hourly-container-div>*:nth-child(3n){
+    font-weight: 900;
 }
 
 #weekly-title {

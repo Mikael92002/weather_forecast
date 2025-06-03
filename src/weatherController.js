@@ -191,7 +191,7 @@ export class weatherController {
       }
 
       iconDiv.src = this.iconSelect(conditions);
-      iconDiv.style.width = "20px";
+      iconDiv.style.width = "40px";
 
       containerDiv.append(hourDiv, iconDiv, tempDiv);
       this.hourlyGrid.append(containerDiv);
