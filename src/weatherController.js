@@ -9,14 +9,17 @@ export class weatherController {
   inputField;
   C;
   F;
-  weatherForecastGrid;
+  weatherGrid;
+  hourlyGrid;
 
   constructor(model, view) {
     this.model = model;
     this.view = view;
 
-    //body:
-    this.weatherForecastGrid = document.querySelector("#weather-grid");
+    //hourly weather grid:
+    this.hourlyGrid = document.querySelector("#hourly-grid")
+    //weekly weather grid:
+    this.weatherGrid = document.querySelector("#weather-grid");
     // searchButton:
     this.searchButton = document.querySelector("#search-button");
     this.searchButton.addEventListener("click", (event) =>
@@ -110,11 +113,14 @@ export class weatherController {
 
   updateGridController() {
     this.view.clearGrid();
+    this.createWeeklyGrid();
+    this.createHourlyGrid();
+  }
+
+  createWeeklyGrid(){
     for (let i = 0; i < this.model.dayArray.length; i++) {
       let day = this.model.dayArray[i];
       let dayNumber = new Date(day.datetime).getDay();
-
-
 
       //create weekly grid elements:
       let weatherDiv = document.createElement("div");
@@ -127,9 +133,9 @@ export class weatherController {
       dayDiv.textContent = this.dayNumberToDay(dayNumber);
       
       if (this.C.classList.contains("active")) {
-        tempDiv.textContent = this.roundToOneDecimal((day["temp"] - 32) / (9 / 5));
+        tempDiv.textContent = this.roundToOneDecimal((day["temp"] - 32) / (9 / 5)) + "\u00B0C";
       } else {
-        tempDiv.textContent = day["temp"];
+        tempDiv.textContent = day["temp"] + "\u00B0F";
       }
 
       iconDiv.src = this.iconSelect(day.conditions.toString());
@@ -145,7 +151,40 @@ export class weatherController {
         //console.log(hour[j]["datetime"]);
       }
       weatherDiv.append(dayDiv, iconDiv, tempDiv);
-      this.weatherForecastGrid.appendChild(weatherDiv);
+      this.weatherGrid.appendChild(weatherDiv);
+    }
+  }
+
+  createHourlyGrid(){
+    let today = this.model.dayArray[0];
+    let hourArray = today.hours
+    for(let i = 0;i<hourArray.length;i++){
+      let hour = hourArray[i];
+      let time = hour.datetime.slice(0,hour.datetime.length-3);
+      let conditions = hour.conditions;
+      let temp = hour.temp;
+      console.log(this.MilitaryTimeConverter(time));
+      console.log(conditions);
+      console.log(temp);
+
+      let containerDiv = document.createElement("div");
+      let hourDiv = document.createElement("div");
+      let tempDiv = document.createElement("div");
+      let iconDiv = document.createElement("img");
+
+      hourDiv.textContent = time;
+      if(this.C.classList.contains("active")){
+        tempDiv.textContent = this.roundToOneDecimal((temp-32)/(9/5)) + "\u00B0C"
+      }
+      else{
+        tempDiv.textContent = temp;
+      }
+
+      iconDiv.src = this.iconSelect(conditions);
+      iconDiv.style.width = "20px";
+
+      containerDiv.append(hourDiv, tempDiv, iconDiv);
+      this.hourlyGrid.append(containerDiv);
     }
   }
 
@@ -185,6 +224,23 @@ export class weatherController {
     }
     else if (num === 6){
       return "Sun"
+    }
+  }
+
+  MilitaryTimeConverter(hour){
+    let firstTwoNums = hour.slice(0,2);
+    
+    if(firstTwoNums === "00"){
+      return "12:00 a.m."
+    }
+    if(Number(firstTwoNums)<12){
+      return firstTwoNums + ":00 a.m."
+    }
+    else if(firstTwoNums === "12"){
+      return "12:00 p.m."
+    }
+    else if(Number(firstTwoNums)>12){
+      return firstTwoNums-12 + ":00 p.m."
     }
   }
 }

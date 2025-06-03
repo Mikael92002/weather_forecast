@@ -141,7 +141,7 @@ span:hover {
     font-family: "M PLUS Rounded 1c", sans-serif;
     font-weight: 900;
     font-style: normal;
-    font-size: 2rem;
+    font-size: 2.25rem;
     color: white;
     text-shadow: 3px 2px 2px rgb(113, 113, 113);
     font-style: normal;
@@ -173,7 +173,7 @@ span:hover {
 
 #weather-grid {
     display: grid;
-    grid-auto-columns: 50px;
+    grid-auto-columns: fit-content;
     grid-auto-flow: column;
     max-width: 100vw;
     align-self: center;
@@ -187,12 +187,13 @@ span:hover {
 
 #weather-div{
     display: grid;
-    grid-template-rows: 40px 40px 50px;
+    grid-template-rows: 40px 40px 40px;
     color: white;
     border: 1px solid white;
     text-align: center;
     justify-items: center;
     align-items: center;
+    padding: 0 1rem;
 }
 
 #day-div{
@@ -202,4 +203,5 @@ span:hover {
 }
 #temp-div{
     font-weight: 900;
+    font-size: large;
 }
