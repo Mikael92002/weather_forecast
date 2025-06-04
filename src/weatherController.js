@@ -11,18 +11,14 @@ export class weatherController {
   F;
   weatherGrid;
   hourlyGrid;
-  weeklyTitle;
-  dailyTitle;
 
   constructor(model, view) {
     this.model = model;
     this.view = view;
 
     //hourly weather grid:
-    this.dailyTitle = document.querySelector("#daily-title");
     this.hourlyGrid = document.querySelector("#hourly-grid")
     //weekly weather grid:
-    this.weeklyTitle = document.querySelector("#weekly-title");
     this.weatherGrid = document.querySelector("#weather-grid");
     // searchButton:
     this.searchButton = document.querySelector("#search-button");
@@ -73,21 +69,14 @@ export class weatherController {
 
       //Fail/no city found:
       if (result === "400") {
-        this.inputField.value = "WRONG CITY";
-        console.log("ERROR ERROR ERROR");
+        this.inputField.value = "WRONG CITY!";
         this.view.errorView();
         this.view.clearGrid();
         this.model.currentConditions = "";
-        this.weeklyTitle.classList.remove("visible");
-        this.dailyTitle.classList.remove("visible");
       }
 
       //Success:
       else {
-        console.log(result);
-        for (let day of this.model.dayArray) {
-          //console.log("Day: " + JSON.stringify(day));
-        }
 
         //city name update:
         this.view.updateCityName(this.model.retrievedCity);
@@ -109,8 +98,6 @@ export class weatherController {
 
         //grid update:
         this.updateGridController();
-        this.weeklyTitle.classList.add("visible");
-        this.dailyTitle.classList.add("visible")
       }
     }
   }
@@ -150,14 +137,9 @@ export class weatherController {
       iconDiv.style.height = "100%"
 
       weatherDiv.id = "weather-div";
-      //console.log(day);
 
       let hour = day["hours"];
-      //console.log(hour);
 
-      for (let j = 0; j < hour.length; j++) {
-        //console.log(hour[j]["datetime"]);
-      }
       weatherDiv.append(dayDiv, iconDiv, tempDiv);
       this.weatherGrid.appendChild(weatherDiv);
     }
@@ -172,8 +154,6 @@ export class weatherController {
       let conditions = hour.conditions;
       let temp = hour.temp;
       let realTime = this.MilitaryTimeConverter(time);
-      console.log(conditions);
-      console.log(temp);
 
       let containerDiv = document.createElement("div");
       let hourDiv = document.createElement("div");

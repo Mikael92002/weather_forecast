@@ -4,6 +4,8 @@ export class weatherView {
   currentTemp;
   weatherGrid;
   hourlyGrid;
+  weeklyTitle;
+  dailyTitle;
 
   constructor() {
     this.weatherForecastDiv = document.querySelector("#forecast-container");
@@ -11,6 +13,8 @@ export class weatherView {
     this.currentTemp = document.querySelector("#current-temp");
     this.weatherGrid = document.querySelector("#weather-grid");
     this.hourlyGrid = document.querySelector("#hourly-grid");
+    this.weeklyTitle = document.querySelector("#weekly-title");
+    this.dailyTitle = document.querySelector("#daily-title");
   }
 
   updateCityName(newCity) {
@@ -22,7 +26,6 @@ export class weatherView {
     }, 250);
   }
 
-  addToGrid() {}
   clearGrid() {
     while (this.weatherGrid.firstChild) {
       this.weatherGrid.removeChild(this.weatherGrid.lastChild);
@@ -52,25 +55,15 @@ export class weatherView {
   loadView() {
     this.updateCityName("loading");
     this.updateCurrentTemp("loading");
+    this.weeklyTitle.classList.add("visible");
+    this.dailyTitle.classList.add("visible");
   }
 
   errorView() {
     this.updateCityName("City not found!");
     this.updateCurrentTemp("");
+    this.weeklyTitle.classList.remove("visible");
+    this.dailyTitle.classList.remove("visible");
   }
 
-  updateGrid() {}
-
-  //UNFINISHEDDD
-  // updateGridTemp(dayArray, CorF, rounding) {
-  //   for (let i = 0; i < dayArray.length; i++) {
-  //     let day = dayArray[i];
-  //     if (CorF === "C") {
-  //       this.weatherGrid.children[i].textContent = rounding((day["temp"]-32)/(9/5));
-  //     }
-  //     else if (CorF === "F"){
-  //       this.weatherGrid.children[i].textContent = day["temp"];
-  //     }
-  //   }
-  // }
 }
