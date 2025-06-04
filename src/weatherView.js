@@ -27,7 +27,7 @@ export class weatherView {
     setTimeout(() => {
       this.cityName.textContent = newCity;
       this.cityName.classList.add("visible");
-    }, 250);
+    }, 500);
   }
 
   clearGrid() {
@@ -53,7 +53,7 @@ export class weatherView {
         this.currentTemp.textContent = "";
       }
       this.currentTemp.classList.add("visible");
-    }, 250);
+    }, 500);
   }
 
   loadView() {
@@ -77,7 +77,7 @@ export class weatherView {
       this.forecastContainerChildrenDivs.forEach((divs) =>{
         divs.classList.add("visible");
       })
-    }, 250);
+    }, 500);
   }
 
   weeklyDailyTextHandling(operation){
