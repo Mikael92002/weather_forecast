@@ -25,15 +25,17 @@ export class weatherController {
     this.weatherGrid = document.querySelector("#weather-grid");
     // searchButton:
     this.searchButton = document.querySelector("#search-button");
-    this.searchButton.addEventListener("click", (event) =>
-      this.searchEvent(event)
-    );
+    this.searchButton.addEventListener("click", (event) => {
+      this.searchButton.blur();
+      this.searchEvent(event);
+    });
 
     //inputField:
     this.inputField = document.querySelector("#search-input");
     this.inputField.addEventListener("keydown", (event) => {
       if (event["key"] !== undefined) {
         if (event["key"].toLowerCase() === "enter") {
+          this.inputField.blur();
           this.searchEvent();
         }
       }
