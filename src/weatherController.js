@@ -11,13 +11,16 @@ export class weatherController {
   F;
   weatherGrid;
   hourlyGrid;
+  forecastContainerChildrenDivs;
 
   constructor(model, view) {
     this.model = model;
     this.view = view;
 
+    //forecast Divs:
+
     //hourly weather grid:
-    this.hourlyGrid = document.querySelector("#hourly-grid")
+    this.hourlyGrid = document.querySelector("#hourly-grid");
     //weekly weather grid:
     this.weatherGrid = document.querySelector("#weather-grid");
     // searchButton:
@@ -56,7 +59,7 @@ export class weatherController {
       this.F.classList.add("active");
       this.C.classList.remove("active");
       this.view.updateCurrentTemp(this.model.currentConditions["temp"], "F");
-      this.updateGridController()
+      this.updateGridController();
     });
   }
 
@@ -77,7 +80,8 @@ export class weatherController {
 
       //Success:
       else {
-
+        //titles update:
+        this.view.weeklyDailyTextHandling();
         //city name update:
         this.view.updateCityName(this.model.retrievedCity);
 
@@ -98,6 +102,7 @@ export class weatherController {
 
         //grid update:
         this.updateGridController();
+        this.view.visibilityOn();
       }
     }
   }
@@ -112,7 +117,7 @@ export class weatherController {
     this.createHourlyGrid();
   }
 
-  createWeeklyGrid(){
+  createWeeklyGrid() {
     for (let i = 0; i < this.model.dayArray.length; i++) {
       let day = this.model.dayArray[i];
       let dayNumber = new Date(day.datetime).getDay();
@@ -126,15 +131,16 @@ export class weatherController {
       tempDiv.id = "temp-div";
 
       dayDiv.textContent = this.dayNumberToDay(dayNumber);
-      
+
       if (this.C.classList.contains("active")) {
-        tempDiv.textContent = this.roundToOneDecimal((day["temp"] - 32) / (9 / 5)) + "\u00B0C";
+        tempDiv.textContent =
+          this.roundToOneDecimal((day["temp"] - 32) / (9 / 5)) + "\u00B0C";
       } else {
         tempDiv.textContent = day["temp"] + "\u00B0F";
       }
 
       iconDiv.src = this.iconSelect(day.conditions.toString());
-      iconDiv.style.height = "100%"
+      iconDiv.style.height = "100%";
 
       weatherDiv.id = "weather-div";
 
@@ -145,12 +151,12 @@ export class weatherController {
     }
   }
 
-  createHourlyGrid(){
+  createHourlyGrid() {
     let today = this.model.dayArray[0];
-    let hourArray = today.hours
-    for(let i = 0;i<hourArray.length;i++){
+    let hourArray = today.hours;
+    for (let i = 0; i < hourArray.length; i++) {
       let hour = hourArray[i];
-      let time = hour.datetime.slice(0,hour.datetime.length-3);
+      let time = hour.datetime.slice(0, hour.datetime.length - 3);
       let conditions = hour.conditions;
       let temp = hour.temp;
       let realTime = this.MilitaryTimeConverter(time);
@@ -163,10 +169,10 @@ export class weatherController {
       containerDiv.id = "hourly-container-div";
 
       hourDiv.textContent = realTime + ": ";
-      if(this.C.classList.contains("active")){
-        tempDiv.textContent = this.roundToOneDecimal((temp-32)/(9/5)) + "\u00B0C"
-      }
-      else{
+      if (this.C.classList.contains("active")) {
+        tempDiv.textContent =
+          this.roundToOneDecimal((temp - 32) / (9 / 5)) + "\u00B0C";
+      } else {
         tempDiv.textContent = temp + "\u00B0F";
       }
 
@@ -181,56 +187,44 @@ export class weatherController {
   iconSelect(condition) {
     if (condition.toLowerCase().includes("cloudy")) {
       return cloudyImg;
-    }
-    else if(condition.toLowerCase().includes("clear")){
+    } else if (condition.toLowerCase().includes("clear")) {
       return sunnyImg;
-    }
-    else if(condition.toLowerCase().includes("rain")){
+    } else if (condition.toLowerCase().includes("rain")) {
       return rainImg;
-    }
-    else{
+    } else {
       return sunnyImg;
     }
   }
 
-  dayNumberToDay(num){
-    if(num === 0){
-      return "Mon"
-    }
-    else if (num === 1){
-      return "Tue"
-    }
-    else if (num === 2){
-      return "Wed"
-    }
-    else if (num === 3){
-      return "Thu"
-    }
-    else if (num === 4){
-      return "Fri"
-    }
-    else if (num === 5){
-      return "Sat"
-    }
-    else if (num === 6){
-      return "Sun"
+  dayNumberToDay(num) {
+    if (num === 0) {
+      return "Mon";
+    } else if (num === 1) {
+      return "Tue";
+    } else if (num === 2) {
+      return "Wed";
+    } else if (num === 3) {
+      return "Thu";
+    } else if (num === 4) {
+      return "Fri";
+    } else if (num === 5) {
+      return "Sat";
+    } else if (num === 6) {
+      return "Sun";
     }
   }
 
-  MilitaryTimeConverter(hour){
-    let firstTwoNums = hour.slice(0,2);
+  MilitaryTimeConverter(hour) {
+    let firstTwoNums = hour.slice(0, 2);
 
-    if(firstTwoNums === "00"){
-      return "12:00 a.m."
-    }
-    else if(Number(firstTwoNums)<12){
-      return firstTwoNums + ":00 a.m."
-    }
-    else if(firstTwoNums === "12"){
-      return "12:00 p.m."
-    }
-    else if(Number(firstTwoNums)>12){
-      return firstTwoNums-12 + ":00 p.m."
+    if (firstTwoNums === "00") {
+      return "12:00 a.m.";
+    } else if (Number(firstTwoNums) < 12) {
+      return firstTwoNums + ":00 a.m.";
+    } else if (firstTwoNums === "12") {
+      return "12:00 p.m.";
+    } else if (Number(firstTwoNums) > 12) {
+      return firstTwoNums - 12 + ":00 p.m.";
     }
   }
 }

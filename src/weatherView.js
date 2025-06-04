@@ -15,6 +15,10 @@ export class weatherView {
     this.hourlyGrid = document.querySelector("#hourly-grid");
     this.weeklyTitle = document.querySelector("#weekly-title");
     this.dailyTitle = document.querySelector("#daily-title");
+
+    //forecast Divs:
+    const forecastContainer = document.querySelector("#forecast-container");
+    this.forecastContainerChildrenDivs = Array.from(forecastContainer.children);
   }
 
   updateCityName(newCity) {
@@ -30,7 +34,7 @@ export class weatherView {
     while (this.weatherGrid.firstChild) {
       this.weatherGrid.removeChild(this.weatherGrid.lastChild);
     }
-    while(this.hourlyGrid.firstChild){
+    while (this.hourlyGrid.firstChild) {
       this.hourlyGrid.removeChild(this.hourlyGrid.lastChild);
     }
   }
@@ -55,15 +59,35 @@ export class weatherView {
   loadView() {
     this.updateCityName("loading");
     this.updateCurrentTemp("loading");
-    this.weeklyTitle.classList.add("visible");
-    this.dailyTitle.classList.add("visible");
+    this.weeklyDailyTextHandling("loading");
   }
 
   errorView() {
     this.updateCityName("City not found!");
     this.updateCurrentTemp("");
-    this.weeklyTitle.classList.remove("visible");
-    this.dailyTitle.classList.remove("visible");
+    this.weeklyDailyTextHandling("remove");
   }
 
+  visibilityOn(){
+    this.forecastContainerChildrenDivs.forEach((divs) => {
+      divs.classList.remove("visible")
+    });
+
+    setTimeout(() => {
+      this.forecastContainerChildrenDivs.forEach((divs) =>{
+        divs.classList.add("visible");
+      })
+    }, 250);
+  }
+
+  weeklyDailyTextHandling(operation){
+    if(operation === "remove" || operation === "loading"){
+      this.weeklyTitle.textContent = ""
+    this.dailyTitle.textContent = ""
+    }
+    else{
+      this.weeklyTitle.textContent = "Weekly Average Forecast";
+      this.dailyTitle.textContent = "Today's Forecast";
+    }
+  }
 }

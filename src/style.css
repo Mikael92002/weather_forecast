@@ -172,10 +172,6 @@ span:hover {
     margin-bottom: 1rem;
 }
 
-#daily-title{
-    opacity:0;
-}
-
 #hourly-grid {
     margin-bottom: 2rem;
 }
@@ -192,36 +188,45 @@ span:hover {
     justify-self: center;
     padding: 0 1rem;
 }
-#hourly-container-div:hover, #hourly-container-div:active{
+
+#hourly-container-div:hover,
+#hourly-container-div:active {
     background-color: rgb(43, 43, 190);
 }
 
-#hourly-container-div>*:nth-child(2n),#hourly-container-div>*:nth-child(3n)  {
+#hourly-container-div>*:nth-child(2n),
+#hourly-container-div>*:nth-child(3n) {
     justify-self: start;
 }
-#hourly-container-div>:first-child{
+
+#hourly-container-div>:first-child {
     font-size: x-large;
     padding: 10px;
 }
-#hourly-container-div>*:nth-child(2n){
+
+#hourly-container-div>*:nth-child(2n) {
     margin-right: 20px;
 }
-#hourly-container-div>*:nth-child(3n){
+
+#hourly-container-div>*:nth-child(3n) {
     font-weight: 900;
 }
 
-#weekly-title {
+#weekly-title,
+#daily-title {
     font-family: "M PLUS Rounded 1c", sans-serif;
     opacity: 0;
-}
-
-#weekly-title.visible, #daily-title.visible {
-    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
     color: white;
     text-align: center;
     margin-bottom: 1rem;
     font-size: xx-large;
     text-shadow: 3px 2px 2px rgb(113, 113, 113);
+}
+
+#weekly-title.visible,
+#daily-title.visible {
+    opacity: 1;
 }
 
 #weather-grid {
@@ -258,4 +263,13 @@ span:hover {
 #temp-div {
     font-weight: 900;
     font-size: large;
+}
+
+#forecast-container>div {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#forecast-container>div.visible {
+    opacity: 1;
 }
